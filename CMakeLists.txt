@@ -9,3 +9,4 @@ project(GAMMA2)
 
 add_subdirectory(serial)
 add_subdirectory(controller)
+add_subdirectory(wallFollow)
