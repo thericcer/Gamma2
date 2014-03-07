@@ -1,6 +1,0 @@
-include_directories(${GAMMA2_SOURCE_DIR}/controller)
-link_directories(${GAMMA2_BINARY_DIR}/controller)
-
-add_executable(wallFollow wallFollow.cpp)
-
-target_link_libraries(wallFollow Controller)
