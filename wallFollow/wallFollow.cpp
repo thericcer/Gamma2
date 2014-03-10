@@ -6,6 +6,10 @@ Controller controller("/dev/ttyACM0");
 unsigned short sensors[4] = {0};
 double angle = 0;
 
+
+/* This is a function to get the robot a certain distance
+   from it's left side to a wall/wave. Get some!
+*/
 void setDistance(void){
   controller.getSensor(2, &sensors[2]);
   controller.getSensor(3, &sensors[3]);
@@ -35,7 +39,13 @@ void setDistance(void){
   }
 }
 
-void getSquaa(void){
+
+/* This function computes the angle the robot is to a wall
+   from it's left side and then tries to get the robot parallel
+   to the wall within a certain range. As Raymond would say...
+   Get Squaa!
+*/
+void getSquare(void){
     controller.getSensor(2, &sensors[2]);
     controller.getSensor(3, &sensors[3]);
 
@@ -76,7 +86,7 @@ void getSquaa(void){
 int main(void){
 
   setDistance();
-  getSquaa();
+  getSquare();
   
 
   while(1){
