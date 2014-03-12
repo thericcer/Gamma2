@@ -24,6 +24,7 @@
 #define FORWARD 'F'
 #define SENSOR 'Z'
 #define STATUS 'C'
+#define PLATFORM 'P'
 
 unsigned char inPacket[5];
 
@@ -52,6 +53,9 @@ Servo leftFront;
 Servo leftRear;
 Servo rightFront;
 Servo rightRear;
+Servo platformLeft;
+Servo platformRight;
+
 char newData;
 
 void setup(){
@@ -91,11 +95,16 @@ void setup(){
   leftRear.attach(8);
   rightFront.attach(9);
   rightRear.attach(10);
+  platformRight.attach(26);
+  platformLeft.attach(27);
+
   
-  leftFront.write(0);
-  leftRear.write(0);
-  rightFront.write(0);
-  rightRear.write(0);
+  leftFront.write(90);
+  leftRear.write(90);
+  rightFront.write(90);
+  rightRear.write(90);
+  platformRight.write(90);
+  platformLeft.write(90);
 }
 
 void loop(){
@@ -244,47 +253,29 @@ void loop(){
         Serial.write((loopTime >> 8) & 0xFF);
         
         break;
-  
+      
+      //Platform packet received, drive platform up or down
+      case PLATFORM:
+        if(inPacket[1] == 'U'){
+            //Move Platform Up
+            platformRight.write(180);
+            platformLeft.write(180);
+        }
+        if(inPacket[1] == 'D'){
+            //Move Platform Down
+            platformRight.write(0);
+            platformLeft.write(0);
+        }
+        if(inPacket[1] == 'S'){
+            platformRight.write(90);
+            platformLeft.write(90);
+        }
+        break;
         
       default:
         break;
     }
   }
-  
-  /*
-  //Update Sensor Values.
-  if(LoopCount == 1){
-    SensorArray[0] = analogRead(0);
-  }
-  
-  if(LoopCount == 2){
-      SensorArray[1] = analogRead(1);
-  }
-
-  if(LoopCount == 3){
-    pinMode(22, OUTPUT);
-    digitalWrite(22, LOW);
-    delayMicroseconds(2);
-    digitalWrite(22, HIGH);
-    delayMicroseconds(5);
-    digitalWrite(22, LOW);
-    pinMode(22, INPUT);    
-    SensorArray[2] = (pulseIn(22, HIGH, 10000));
-    
-  }
-  
-  if(LoopCount == 4){
-    pinMode(23, OUTPUT);
-    digitalWrite(23, LOW);
-    delayMicroseconds(2);
-    digitalWrite(23, HIGH);
-    delayMicroseconds(5);
-    digitalWrite(23, LOW);
-    pinMode(23, INPUT);    
-    SensorArray[3] = (pulseIn(23, HIGH, 10000));
-    
-    LoopCount = 0;
-  }*/
   
   loopTime = millis() - oldLoopTime;  
   LoopCount++;

@@ -65,6 +65,22 @@ int Controller::getSensor(unsigned char sensor, unsigned short* sensorValue){
   }
 }
 
+int Controller::movePlatform(char direction){
+  unsigned char packet[5] = {'P', direction, 'x', 'x', 'x'};
+  
+  //Write packet and wait for status byte
+  serialPort.m_write(packet, 5);
+  while(serialPort.peek() < 1);
+  serialPort.m_read(&status, 1);
+
+  if (status == 0x2){
+    return 1;
+  }
+  else {
+    return -1;
+  }
+}
+
 int Controller::getStatus(char* statusArray){
   unsigned char packet[5] = {'C', 'x', 'x', 'x', 'x'};
 

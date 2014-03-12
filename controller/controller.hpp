@@ -33,6 +33,11 @@ public:
   */
   int getSensor(unsigned char sensor, unsigned short* sensorValue);
 
+  /*This function controlls the platform. a U moves the platform up, a D moves the platform down
+    and an S stops the platform
+  */
+  int movePlatform(char direction);
+
   /*Set Status takes one argument, an address to the start of a 10 character array. When called it 
     will pull all stored datastructures from the controller to verify data sent to the controller.
     This function waits for all data from the controller to be in the serial buffer until attemting
