@@ -38,6 +38,8 @@ public:
   */
   int movePlatform(char direction);
 
+  /*Gives an angle between 0 and 180 and it moves the position of the hook to that angle*/
+  int moveHook(unsigned char angle);
   /*Set Status takes one argument, an address to the start of a 10 character array. When called it 
     will pull all stored datastructures from the controller to verify data sent to the controller.
     This function waits for all data from the controller to be in the serial buffer until attemting

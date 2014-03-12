@@ -81,6 +81,22 @@ int Controller::movePlatform(char direction){
   }
 }
 
+int Controller::moveHook(unsigned char angle){
+  unsigned char packet[5] = {'H', angle, 'x', 'x', 'x'};
+
+  //write packet on serial port
+  serialPort.m_write(packet, 5);
+  while(serialPort.peek()<1);
+  serialPort.m_read(&status, 1);
+
+  if (status == 0x2){
+    return 1;
+  }
+  else{
+    return -1;
+  }
+}
+
 int Controller::getStatus(char* statusArray){
   unsigned char packet[5] = {'C', 'x', 'x', 'x', 'x'};
 
